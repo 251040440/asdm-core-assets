@@ -92,7 +92,8 @@ function parseArgs(args: string[]): CliOptions {
 
 // Format a single log entry for streaming output
 function formatSingleEntry(line: string, format: string, colorize: boolean): string | null {
-  const entry = parseLogLine(line);
+  // Pass silent=true to suppress warnings in stream mode
+  const entry = parseLogLine(line, true);
   if (!entry) return null;
 
   // Skip file-history-snapshot and result in stream mode
