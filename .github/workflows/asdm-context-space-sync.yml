@@ -1,8 +1,6 @@
 name: ASDM Context Space Sync
 
 on:
-  schedule:
-    - cron: '0 */6 * * *'  # Run every 6 hours
   workflow_dispatch:
 
 jobs:
