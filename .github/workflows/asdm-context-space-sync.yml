@@ -34,6 +34,12 @@ jobs:
           npm install -g @tencent-ai/codebuddy-code
           codebuddy --version
 
+      - name: Build Log Parser
+        run: |
+          cd tools/codebuddy-log-parser
+          npm install
+          npm run build
+
       - name: Clone target repository
         id: clone-repo
         env:
@@ -84,44 +90,60 @@ jobs:
           echo "Current commit: $(git log -1 --oneline)"
 
       - name: Create context-space-result directory
+        id: create-result-dir
         run: |
-          mkdir -p context-space-result
-          echo "Created context-space-result directory"
+          RESULT_DIR="${{ github.workspace }}/context-space-result"
+          mkdir -p "$RESULT_DIR"
+          echo "RESULT_DIR=$RESULT_DIR" >> $GITHUB_OUTPUT
+          echo "Created context-space-result directory at: $RESULT_DIR"
 
       - name: Analyze repository with CodeBuddy
         env:
           CODEBUDDY_API_KEY: ${{ secrets.CODEBUDDY_API_KEY }}
           CODEBUDDY_INTERNET_ENVIRONMENT: ${{ secrets.CODEBUDDY_INTERNET_ENVIRONMENT }}
           REPO_NAME: ${{ steps.clone-repo.outputs.REPO_NAME }}
+          RESULT_DIR: ${{ steps.create-result-dir.outputs.RESULT_DIR }}
         run: |
           cd "$REPO_NAME"
           
-          ANALYSIS_PROMPT="Please analyze this repository and generate context space information. Generate the following information:
-          1. Project structure overview
-          2. Key modules and their purposes
-          3. Main dependencies and frameworks used
-          4. Important configuration files
-          5. Entry points and main workflows
-          6. Architecture patterns and design decisions
+          LOG_FILE="${{ github.workspace }}/analysis.log"
+          PARSER="${{ github.workspace }}/tools/codebuddy-log-parser/dist/index.js"
+          PROMPT_FILE="${{ github.workspace }}/.github/workflows/ANALYSIS_PROMPT.md"
           
-          Please provide a comprehensive analysis that would help understand this codebase quickly."
-          
+          # Read prompt template and replace placeholder with actual result directory
+          ANALYSIS_PROMPT=$(sed "s|{RESULT_DIR}|$RESULT_DIR|g" "$PROMPT_FILE")
+
           echo "=== Starting CodeBuddy Analysis ==="
           echo "Repository: $REPO_NAME"
+          echo "Result directory: $RESULT_DIR"
           echo ""
           
-          # Run codebuddy analysis and save results
-          codebuddy -p "$ANALYSIS_PROMPT" -y --output-format text > "${{ github.workspace }}/context-space-result/analysis.txt" 2>&1
+          # Run codebuddy with stream-json, save to file and parse in real-time via pipe
+          eval "codebuddy -p \"$ANALYSIS_PROMPT\" -y --output-format stream-json" 2>&1 | tee "$LOG_FILE" | node "$PARSER" --stdin --stream -f human-chat --no-color
+
+      - name: Parse final log
+        if: always()
+        run: |
+          LOG_FILE="${{ github.workspace }}/analysis.log"
+          PARSER="${{ github.workspace }}/tools/codebuddy-log-parser/dist/index.js"
           
-          echo "Analysis completed. Results saved to context-space-result/analysis.txt"
+          if [ -f "$LOG_FILE" ]; then
+            echo ""
+            echo "=== Final Parsed Log ==="
+            cat "$LOG_FILE" | node "$PARSER" --stdin -f human-chat --no-color 2>/dev/null || echo "Log file exists but parser failed"
+            
+            # Also generate JSON output for artifacts
+            cat "$LOG_FILE" | node "$PARSER" --stdin -f json > "${{ github.workspace }}/context-space-result/analysis-log.json" 2>/dev/null || true
+          fi
 
       - name: Generate context space metadata
         run: |
           REPO_NAME="${{ steps.clone-repo.outputs.REPO_NAME }}"
           ACTUAL_BRANCH="${{ steps.clone-repo.outputs.ACTUAL_BRANCH }}"
+          RESULT_DIR="${{ steps.create-result-dir.outputs.RESULT_DIR }}"
           
           # Create metadata file
-          cat > context-space-result/metadata.json << EOF
+          cat > "$RESULT_DIR/metadata.json" << EOF
           {
             "repository": {
               "url": "${{ inputs.repo-url }}",
@@ -131,13 +153,26 @@ jobs:
             },
             "analysis": {
               "timestamp": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")",
-              "workflow_run_id": "${{ github.run_id }}"
+              "workflow_run_id": "${{ github.run_id }}",
+              "result_directory": "$RESULT_DIR"
             }
           }
           EOF
           
           echo "Metadata generated:"
-          cat context-space-result/metadata.json
+          cat "$RESULT_DIR/metadata.json"
+          
+          echo ""
+          echo "Generated files in result directory:"
+          ls -la "$RESULT_DIR/" || echo "No files generated yet"
+
+      - name: Upload analysis logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: analysis-logs
+          path: analysis.log
+          retention-days: 7
 
       - name: Upload context space artifacts
         if: always()
@@ -155,5 +190,12 @@ jobs:
           echo "======================================"
           echo "Repository: ${{ inputs.repo-url }}"
           echo "Branch: ${{ steps.clone-repo.outputs.ACTUAL_BRANCH }}"
-          echo "Artifacts: context-space-result"
+          echo "Result directory: ${{ steps.create-result-dir.outputs.RESULT_DIR }}"
+          echo ""
+          echo "Artifacts:"
+          echo "  - context-space-result: Analysis results (30 days retention)"
+          echo "  - analysis-logs: Execution logs (7 days retention)"
+          echo ""
+          echo "Generated files:"
+          ls -la context-space-result/ 2>/dev/null || echo "No files in result directory"
           echo "======================================"
