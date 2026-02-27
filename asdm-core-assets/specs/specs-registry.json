@@ -1,7 +1,7 @@
 {
   "version": "1.0.2",
   "dateCreated": "2026-02-19T00:00:00Z",
-  "dateUpdated": "2026-02-26T00:00:00Z",
+  "dateUpdated": "2026-02-27T00:00:00Z",
   "createdBy": "ASDM Platform",
   "updatedBy": "ASDM Platform",
   "specs": [
@@ -114,6 +114,20 @@
       "entryPoint": "vue3-composition-api/README.md",
       "dateCreated": "2026-02-26T00:00:00Z",
       "dateUpdated": "2026-02-26T00:00:00Z",
+      "createdBy": "ASDM Platform",
+      "updatedBy": "ASDM Platform"
+    },
+    {
+      "id": "typescript-vite-vue-tailwind-daisyui",
+      "guid": "c9d0e1f2-a3b4-5678-3456-789012345678",
+      "name": "TypeScript Vite Vue Tailwind DaisyUI Development Specs",
+      "description": "Comprehensive guidelines for TypeScript development with Vite, Vue.js, Tailwind CSS, and DaisyUI, including code style, performance optimization, and best practices",
+      "version": "1.0.0",
+      "downloadUrl": "typescript-vite-vue-tailwind-daisyui.zip",
+      "path": "typescript-vite-vue-tailwind-daisyui",
+      "entryPoint": "typescript-vite-vue-tailwind-daisyui/README.md",
+      "dateCreated": "2026-02-27T00:00:00Z",
+      "dateUpdated": "2026-02-27T00:00:00Z",
       "createdBy": "ASDM Platform",
       "updatedBy": "ASDM Platform"
     }
