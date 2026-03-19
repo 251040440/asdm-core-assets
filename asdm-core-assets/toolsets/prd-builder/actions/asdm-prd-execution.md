@@ -24,6 +24,57 @@ Before executing any tasks, you must detect and use the current environment's re
 
 **IMPORTANT**: The language detection is the FIRST step before any task execution. All interactions must consistently use the detected language throughout the entire process.
 
+## Tech Stack Detection
+
+Before executing backend tasks, you must detect and apply the appropriate tech stack specification for code generation:
+
+### 1. Detect Tech Stack
+
+Check if the user specifies a tech stack for the task:
+- If user provides `--tech-stack` or `-t` parameter, use that tech stack
+- If not specified, detect from the project context:
+  - Check existing code in the workspace
+  - Look at package.json, pom.xml, go.mod, requirements.txt, etc.
+  - Determine the primary backend technology used
+
+### 2. Supported Tech Stacks
+
+The following backend CRUD specifications are available:
+
+| Tech Stack | Spec File | Use Case |
+|------------|-----------|----------|
+| Java Spring Boot | `.asdm/toolsets/prd-builder/spec/backend/java-springboot-crud.md` | Enterprise Java applications |
+| .NET (C#) | `.asdm/toolsets/prd-builder/spec/backend/dotnet-crud.md` | Microsoft ecosystem applications |
+| Go (Golang) | `.asdm/toolsets/prd-builder/spec/backend/go-crud.md` | High-performance microservices |
+| Python | `.asdm/toolsets/prd-builder/spec/backend/python-crud.md` | FastAPI/SQLAlchemy applications |
+
+### 3. Apply Tech Stack Specification
+
+When generating code:
+1. Read the relevant tech stack spec from `.asdm/toolsets/prd-builder/spec/backend/`
+2. Follow the templates and patterns defined in the spec
+3. Generate code that matches the tech stack's conventions:
+   - **Java**: Follow Spring Boot patterns, use Lombok, JPA annotations
+   - **.NET**: Follow ASP.NET Core patterns, use Entity Framework
+   - **Go**: Follow Gin + GORM patterns, use standard Go conventions
+   - **Python**: Follow FastAPI patterns, use Pydantic v2, SQLAlchemy 2.0
+
+### 4. Tech Stack Parameters
+
+When executing tasks, accept the following parameters:
+- `--tech-stack <type>` or `-t <type>`: Specify backend technology
+- `--entity <name>`: Entity name for CRUD operations
+
+Example:
+```
+/asdm-prd-execution --tech-stack java-springboot --entity User
+/asdm-prd-execution --tech-stack dotnet --entity Product
+/asdm-prd-execution --tech-stack go --entity Order
+/asdm-prd-execution --tech-stack python --entity Customer
+```
+
+**IMPORTANT**: Always apply the correct tech stack specification when generating backend code. The generated code must follow the patterns and conventions of the specified technology stack.
+
 ## Context Loading
 
 Before executing tasks, the AI model must load the feature context from the feature directory. This ensures that task execution aligns with the feature requirements and specifications.
