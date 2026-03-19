@@ -16,21 +16,21 @@ This document specifies the requirements and standards for generating React-base
 
 When generating React prototypes, the following coding standards from `asdm-core-assets/specs` MUST be followed:
 
-- **[React.js Development Specs](../specs/reactjs/README.md)**: Primary coding standards for React development
-  - [React Coding Standard](../specs/reactjs/reactjs-coding-standard.md): Component structure, naming conventions, hooks best practices
-  - [Performance Guidelines](../specs/reactjs/reactjs-performance-guidelines.md): Optimization patterns
-  - [Testing Guidelines](../specs/reactjs/reactjs-testing-guidelines.md): Testing strategies
+- **[React.js Development Specs](../../.asdm/specs/reactjs/README.md)**: Primary coding standards for React development
+  - [React Coding Standard](../../.asdm/specs/reactjs/reactjs-coding-standard.md): Component structure, naming conventions, hooks best practices
+  - [Performance Guidelines](../../.asdm/specs/reactjs/reactjs-performance-guidelines.md): Optimization patterns
+  - [Testing Guidelines](../../.asdm/specs/reactjs/reactjs-testing-guidelines.md): Testing strategies
 
-- **[JavaScript General](../specs/javascript/javascript.md)**: JavaScript coding conventions
+- **[JavaScript General](../../.asdm/specs/javascript/javascript.md)**: JavaScript coding conventions
   - 2 spaces indentation
   - Semicolons required
   - Single quotes for strings
   - Strict equality (`===`/`!==`)
   - `const`/`let` only, no `var`
 
-- **[TypeScript](../specs/typescript/typescrit.md)**: TypeScript type system (if using TypeScript)
+- **[TypeScript](../../.asdm/specs/typescript/typescrit.md)**: TypeScript type system (if using TypeScript)
 
-- **[CSS](../specs/css/css.md)**: Styling conventions
+- **[CSS](../../.asdm/specs/css/css.md)**: Styling conventions
 
 ## Required Conventions
 

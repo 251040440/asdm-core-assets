@@ -16,17 +16,17 @@ This document specifies the requirements and standards for generating vanilla HT
 
 When generating HTML prototypes, the following coding standards from `asdm-core-assets/specs` MUST be followed:
 
-- **[HTML Specifications](../specs/html/html.md)**: HTML semantic elements and accessibility
+- **[HTML Specifications](../../.asdm/specs/html/html.md)**: HTML semantic elements and accessibility
   - Semantic HTML5 elements
   - Accessibility requirements (ARIA attributes)
   - SEO best practices
 
-- **[CSS Specifications](../specs/css/css.md)**: CSS styling conventions
+- **[CSS Specifications](../../.asdm/specs/css/css.md)**: CSS styling conventions
   - CSS Variables usage
   - BEM naming convention
   - Responsive design patterns
 
-- **[JavaScript General](../specs/javascript/javascript.md)**: JavaScript coding conventions
+- **[JavaScript General](../../.asdm/specs/javascript/javascript.md)**: JavaScript coding conventions
   - ES Modules usage
   - Modern JavaScript patterns
 

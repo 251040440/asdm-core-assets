@@ -130,9 +130,9 @@ After scaffolding:
 
 All scaffolded projects MUST follow the coding standards from `asdm-core-assets/specs`:
 
-- **React**: Follow [React Development Specs](../specs/reactjs/README.md)
-- **Vue**: Follow [Vue 3 Composition API Specs](../specs/vue3-composition-api/README.md)
-- **HTML**: Follow [HTML Specifications](../specs/html/html.md) and [CSS](../specs/css/css.md)
+- **React**: Follow [React Development Specs](../../.asdm/specs/reactjs/README.md)
+- **Vue**: Follow [Vue 3 Composition API Specs](../../.asdm/specs/vue3-composition-api/README.md)
+- **HTML**: Follow [HTML Specifications](../../.asdm/specs/html/html.md) and [CSS](../specs/css/css.md)
 
 Key conventions:
 - 2 spaces indentation (no tabs)

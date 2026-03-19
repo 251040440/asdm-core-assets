@@ -133,9 +133,9 @@ After generation, the tool automatically:
 
 All generated prototypes MUST follow the coding standards from `asdm-core-assets/specs`:
 
-- **React**: Follow [React Development Specs](../specs/reactjs/README.md)
-- **Vue**: Follow [Vue 3 Composition API Specs](../specs/vue3-composition-api/README.md)
-- **HTML**: Follow [HTML Specifications](../specs/html/html.md) and [CSS](../specs/css/css.md)
+- **React**: Follow [React Development Specs](../../.asdm/specs/reactjs/README.md)
+- **Vue**: Follow [Vue 3 Composition API Specs](../../.asdm/specs/vue3-composition-api/README.md)
+- **HTML**: Follow [HTML Specifications](../../.asdm//specs/html/html.md) and [CSS](../../.asdm/specs/css/css.md)
 
 Key conventions:
 - 2 spaces indentation (no tabs)
@@ -148,10 +148,10 @@ The tool outputs which specs are being used during generation.
 
 ## Related Specifications
 
-- [React Specifications](specs/specs4react.md)
-- [Vue Specifications](specs/specs4vue.md)
-- [HTML Specifications](specs/specs4html.md)
-- [Mini Program Specifications](specs/specs4miniprogram.md)
+- [React Specifications](../specs/specs4react.md)
+- [Vue Specifications](../specs/specs4vue.md)
+- [HTML Specifications](../specs/specs4html.md)
+- [Mini Program Specifications](../specs/specs4miniprogram.md)
 
 ## Output Format
 
