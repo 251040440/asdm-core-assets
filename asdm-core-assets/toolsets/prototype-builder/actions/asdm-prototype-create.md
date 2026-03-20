@@ -129,6 +129,54 @@ After generation, the tool automatically:
 3. Starts development server (if applicable)
 4. Reports success/failure status
 
+## Execution Workflow (MUST FOLLOW)
+
+> **WARNING: This workflow is MANDATORY. Do NOT start generating code until ALL specs have been read.**
+
+### Step 1: Parse Parameters
+
+Extract all command parameters (--requirements, --stack, --ui-library, --features, --output, --name).
+
+### Step 2: Load and Read ALL Applicable Specs
+
+Based on `--stack`, **you MUST read EVERY spec file listed below** before writing any code:
+
+| Stack | Specs to Read (ALL mandatory) |
+|-------|-------------------------------|
+| react | 1. `.asdm/specs/reactjs/reactjs-coding-standard.md`<br>2. `.asdm/specs/reactjs/reactjs-performance-guidelines.md`<br>3. `.asdm/specs/javascript/javascript.md`<br>4. `.asdm/specs/css/css.md`<br>5. `.codebuddy/specs/specs4react.md` |
+| vue | 1. `.asdm/specs/vue3-composition-api/` (all files)<br>2. `.asdm/specs/javascript/javascript.md`<br>3. `.asdm/specs/css/css.md`<br>4. `.codebuddy/specs/specs4vue.md` |
+| html | 1. `.asdm/specs/html/html.md`<br>2. `.asdm/specs/css/css.md`<br>3. `.codebuddy/specs/specs4html.md` |
+| miniprogram | 1. `.codebuddy/specs/specs4miniprogram.md` |
+
+**CRITICAL:**
+- Read the spec files using `read_file` tool **before** any code generation.
+- After reading, output a brief summary of the key constraints from the specs.
+- If any spec file is missing, warn the user and proceed with available specs.
+
+### Step 3: Generate Code
+
+Generate all project files strictly following the specs read in Step 2.
+
+Key constraints derived from specs (not exhaustive - read the actual files):
+- Components MUST have `PropTypes` validation
+- Use `React.memo`, `useMemo`, `useCallback` for performance
+- Project structure follows `components/ComponentName/index.jsx` directory pattern
+- Extract reusable logic into `hooks/useXxx.js`
+- API layer goes in `services/`, not `api/`
+- Single quotes for strings, semicolons required, 2 spaces indentation
+- Constants use `UPPER_SNAKE_CASE`
+- CSS Modules preferred (`ComponentName.module.css`)
+- Include `.eslintrc.cjs` and `.prettierrc` config files
+
+### Step 4: Self-Check Against Specs
+
+After generating all code, verify compliance:
+- [ ] All components have PropTypes
+- [ ] Directory structure matches spec
+- [ ] Naming conventions followed (PascalCase components, camelCase hooks, UPPER_SNAKE_CASE constants)
+- [ ] Performance patterns applied (memo, useMemo, useCallback)
+- [ ] Code style matches (single quotes, semicolons, 2 spaces, max 100 chars)
+
 ## Coding Standards
 
 All generated prototypes MUST follow the coding standards from `asdm-core-assets/specs`:

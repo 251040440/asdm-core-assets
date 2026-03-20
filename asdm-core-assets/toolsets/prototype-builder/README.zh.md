@@ -37,7 +37,20 @@ Follow instructions in .asdm/toolsets/prototype-builder/INSTALL.md
 
 ## 编码规范
 
-生成原型时，工具会根据所选技术栈自动应用 `asdm-core-assets/specs` 中的编码规范：
+生成原型时，工具会根据所选技术栈自动应用 `asdm-core-assets/specs` 中的编码规范。
+
+### ⚠️ 强制规范阅读流程
+
+**重要：所有命令在生成代码前必须完整阅读规范文件，确保符合编码标准。**
+
+#### 规范阅读清单
+
+| 技术栈 | 必需规范文件（全部强制） |
+|--------|------------------------|
+| **React** | 1. `.asdm/specs/reactjs/reactjs-coding-standard.md`<br>2. `.asdm/specs/reactjs/reactjs-performance-guidelines.md`<br>3. `.asdm/specs/javascript/javascript.md`<br>4. `.asdm/specs/css/css.md`<br>5. `.asdm/toolsets/prototype-builder/specs/specs4react.md`<br>6. `.asdm/specs/typescript/typescript.md`（如启用 TypeScript） |
+| **Vue** | 1. `.asdm/specs/vue3-composition-api/`（所有文件）<br>2. `.asdm/specs/javascript/javascript.md`<br>3. `.asdm/specs/css/css.md`<br>4. `.asdm/toolsets/prototype-builder/specs/specs4vue.md`<br>5. `.asdm/specs/typescript/typescript.md`（如启用 TypeScript） |
+| **HTML** | 1. `.asdm/specs/html/html.md`<br>2. `.asdm/specs/css/css.md`<br>3. `.asdm/specs/javascript/javascript.md`<br>4. `.asdm/toolsets/prototype-builder/specs/specs4html.md` |
+| **小程序** | 1. `.asdm/toolsets/prototype-builder/specs/specs4miniprogram.md` |
 
 ### 技术栈到规范映射
 
@@ -75,6 +88,34 @@ Follow instructions in .asdm/toolsets/prototype-builder/INSTALL.md
 - `/asdm-prototype-create`：根据需求生成完整原型
 - `/asdm-prototype-scaffold`：使用特定技术栈脚手架新项目
 
+### 强制工作流程（MUST FOLLOW）
+
+所有原型构建命令都遵循以下强制工作流程，确保生成的代码符合编码规范：
+
+#### 1. 解析参数
+- 提取命令行参数（技术栈、UI 库、功能特性等）
+
+#### 2. 加载并读取所有适用规范
+- 根据技术栈读取对应的规范文件
+- **禁止在完成规范阅读前生成任何代码**
+- 输出规范约束摘要
+
+#### 3. 生成代码
+- 严格遵循已读取的规范生成项目代码
+- 应用编码标准、目录结构、命名约定等
+
+#### 4. 自查与验证
+- 对照规范检查生成的代码
+- 验证：PropTypes、目录结构、命名约定、性能优化、代码风格
+
+**关键约束：**
+- React 项目必须包含 PropTypes 验证
+- 使用 React.memo、useMemo、useCallback 进行性能优化
+- 遵循 `components/ComponentName/index.jsx` 目录模式
+- API 层放在 `services/` 而非 `api/`
+- 可复用逻辑提取到 `hooks/useXxx.js`
+- 包含 `.eslintrc.cjs` 和 `.prettierrc` 配置文件
+
 ## 工具集结构
 
 原型构建器工具集具有以下结构：
@@ -85,14 +126,16 @@ Follow instructions in .asdm/toolsets/prototype-builder/INSTALL.md
 ├── README.md                                   ## 英文文档
 ├── README.zh.md                               ## 中文文档
 ├── actions                                     ## 原型构建器指令
-│   ├── asdm-prototype-create.md                ## 创建原型指令
-│   └── asdm-prototype-scaffold.md              ## 脚手架项目指令
+│   ├── asdm-prototype-create.md                ## 创建原型指令（包含强制工作流程）
+│   └── asdm-prototype-scaffold.md              ## 脚手架项目指令（包含强制工作流程）
 └── specs                                       ## 原型构建器规范文档
     ├── specs4react.md                          ## React 原型规范
     ├── specs4vue.md                            ## Vue 原型规范
     ├── specs4html.md                           ## HTML 原型规范
     └── specs4miniprogram.md                   ## 小程序规范
 ```
+
+**注意**：所有 action 文件都包含 `Execution Workflow (MUST FOLLOW)` 章节，强制要求在生成代码前完整阅读相关规范。
 
 ## 使用示例
 

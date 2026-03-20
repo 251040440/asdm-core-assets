@@ -126,6 +126,55 @@ After scaffolding:
 2. You can run `npm run dev` to start development
 3. Project is ready for feature implementation
 
+## Execution Workflow (MUST FOLLOW)
+
+> **WARNING: This workflow is MANDATORY. Do NOT start scaffolding until ALL specs have been read.**
+
+### Step 1: Parse Parameters
+
+Extract all command parameters (--stack, --ui-library, --output, --name, --typescript, --css, --package-manager).
+
+### Step 2: Load and Read ALL Applicable Specs
+
+Based on `--stack`, **you MUST read EVERY spec file listed below** before scaffolding any code:
+
+| Stack | Specs to Read (ALL mandatory) |
+|-------|-------------------------------|
+| react | 1. `.asdm/specs/reactjs/reactjs-coding-standard.md`<br>2. `.asdm/specs/reactjs/reactjs-performance-guidelines.md`<br>3. `.asdm/specs/javascript/javascript.md`<br>4. `.asdm/specs/css/css.md`<br>5. `.asdm/toolsets/prototype-builder/specs/specs4react.md`<br>6. `.asdm/specs/typescript/typescript.md` (if --typescript) |
+| vue | 1. `.asdm/specs/vue3-composition-api/` (all files)<br>2. `.asdm/specs/javascript/javascript.md`<br>3. `.asdm/specs/css/css.md`<br>4. `.asdm/toolsets/prototype-builder/specs/specs4vue.md`<br>5. `.asdm/specs/typescript/typescript.md` (if --typescript) |
+| html | 1. `.asdm/specs/html/html.md`<br>2. `.asdm/specs/css/css.md`<br>3. `.asdm/specs/javascript/javascript.md`<br>4. `.asdm/toolsets/prototype-builder/specs/specs4html.md` |
+| miniprogram | 1. `.asdm/toolsets/prototype-builder/specs/specs4miniprogram.md` |
+
+**CRITICAL:**
+- Read the spec files using `read_file` tool **before** any scaffolding.
+- After reading, output a brief summary of the key constraints from the specs.
+- If any spec file is missing, warn the user and proceed with available specs.
+
+### Step 3: Generate Code
+
+Scaffold project files strictly following the specs read in Step 2.
+
+Key constraints derived from specs (not exhaustive - read the actual files):
+- **React**: Components follow `components/ComponentName/index.jsx` directory pattern
+- **Performance**: Use `React.memo`, `useMemo`, `useCallback` patterns
+- **API Layer**: Place in `services/`, not `api/`
+- **Hooks**: Extract reusable logic into `hooks/useXxx.js`
+- **Code Style**: Single quotes, semicolons required, 2 spaces indentation
+- **Constants**: Use `UPPER_SNAKE_CASE`
+- **CSS**: CSS Modules preferred (`ComponentName.module.css`)
+- **Config**: Include `.eslintrc.cjs` and `.prettierrc` config files
+- **TypeScript**: Strict mode enabled, proper type definitions
+
+### Step 4: Self-Check Against Specs
+
+After scaffolding all code, verify compliance:
+- [ ] Directory structure matches spec requirements
+- [ ] Naming conventions followed (PascalCase components, camelCase hooks, UPPER_SNAKE_CASE constants)
+- [ ] Code style matches (single quotes, semicolons, 2 spaces, max 100 chars)
+- [ ] ESLint and Prettier configs included
+- [ ] TypeScript configuration is correct (if --typescript)
+- [ ] Build configuration matches chosen tech stack
+
 ## Coding Standards
 
 All scaffolded projects MUST follow the coding standards from `asdm-core-assets/specs`:

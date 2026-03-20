@@ -39,6 +39,19 @@ Main features of Prototype Builder:
 
 When generating prototypes, the tool automatically applies coding standards from `asdm-core-assets/specs` based on the selected technology stack:
 
+### ⚠️ Mandatory Spec Reading Process
+
+**IMPORTANT: All commands MUST read complete spec files before generating any code to ensure coding standard compliance.**
+
+#### Spec Reading Checklist
+
+| Tech Stack | Required Spec Files (ALL mandatory) |
+|------------|-----------------------------------|
+| **React** | 1. `.asdm/specs/reactjs/reactjs-coding-standard.md`<br>2. `.asdm/specs/reactjs/reactjs-performance-guidelines.md`<br>3. `.asdm/specs/javascript/javascript.md`<br>4. `.asdm/specs/css/css.md`<br>5. `.asdm/toolsets/prototype-builder/specs/specs4react.md`<br>6. `.asdm/specs/typescript/typescript.md` (if TypeScript enabled) |
+| **Vue** | 1. `.asdm/specs/vue3-composition-api/` (all files)<br>2. `.asdm/specs/javascript/javascript.md`<br>3. `.asdm/specs/css/css.md`<br>4. `.asdm/toolsets/prototype-builder/specs/specs4vue.md`<br>5. `.asdm/specs/typescript/typescript.md` (if TypeScript enabled) |
+| **HTML** | 1. `.asdm/specs/html/html.md`<br>2. `.asdm/specs/css/css.md`<br>3. `.asdm/specs/javascript/javascript.md`<br>4. `.asdm/toolsets/prototype-builder/specs/specs4html.md` |
+| **Mini Program** | 1. `.asdm/toolsets/prototype-builder/specs/specs4miniprogram.md` |
+
 ### Tech Stack to Specs Mapping
 
 | Tech Stack | Primary Spec | Related Specs |
@@ -75,6 +88,34 @@ Once `Prototype Builder` is installed, user can use the following commands to ge
 - `/asdm-prototype-create`: Generate a complete prototype from requirements
 - `/asdm-prototype-scaffold`: Scaffold a new project with specific tech stack
 
+### Mandatory Workflow (MUST FOLLOW)
+
+All prototype building commands follow this mandatory workflow to ensure generated code meets coding standards:
+
+#### 1. Parse Parameters
+- Extract command line parameters (tech stack, UI library, features, etc.)
+
+#### 2. Load and Read ALL Applicable Specs
+- Read corresponding spec files based on tech stack
+- **DO NOT generate any code before completing spec reading**
+- Output spec constraints summary
+
+#### 3. Generate Code
+- Generate project code strictly following read specs
+- Apply coding standards, directory structure, naming conventions, etc.
+
+#### 4. Self-Check and Validation
+- Check generated code against specs
+- Validate: PropTypes, directory structure, naming conventions, performance optimization, code style
+
+**Key Constraints:**
+- React projects MUST include PropTypes validation
+- Use React.memo, useMemo, useCallback for performance optimization
+- Follow `components/ComponentName/index.jsx` directory pattern
+- API layer in `services/` not `api/`
+- Extract reusable logic to `hooks/useXxx.js`
+- Include `.eslintrc.cjs` and `.prettierrc` config files
+
 ## Toolset Structure
 
 The Prototype Builder toolset has the following structure:
@@ -85,8 +126,8 @@ The Prototype Builder toolset has the following structure:
 ├── README.md                                   ## English documentation
 ├── README.zh.md                               ## Chinese documentation
 ├── actions                                     ## Instructions for Prototype Builder
-│   ├── asdm-prototype-create.md                ## Instruction for creating prototypes
-│   └── asdm-prototype-scaffold.md              ## Instruction for scaffolding projects
+│   ├── asdm-prototype-create.md                ## Instruction for creating prototypes (includes mandatory workflow)
+│   └── asdm-prototype-scaffold.md              ## Instruction for scaffolding projects (includes mandatory workflow)
 ├── specs                                       ## Spec documents for Prototype Builder
 │   ├── specs4react.md                          ## React prototype specifications
 │   ├── specs4vue.md                            ## Vue prototype specifications
@@ -95,6 +136,8 @@ The Prototype Builder toolset has the following structure:
 └── tools                                       ## Generator tools
     └── prototype-generator.js                  ## Core prototype generation tool
 ```
+
+**NOTE**: All action files include `Execution Workflow (MUST FOLLOW)` section that enforces complete spec reading before code generation.
 
 ## Usage Examples
 
