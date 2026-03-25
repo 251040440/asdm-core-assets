@@ -2,20 +2,17 @@ based on the absolute path of the folder by user
 refer to the following sample MCP server folder structure
 asdm-core-assets/mcps/{mcp-server-id}/
 
-copy all files and directories from the given folder to asdm-core-assets/mcps/{mcp-server-id}/
+Copy the specified files from the given folder to asdm-core-assets/mcps/{mcp-server-id}/
 create or update README.md in asdm-core-assets/mcps/{mcp-server-id}/
-create INSTALL.md in asdm-core-assets/mcps/{mcp-server-id}/ (if not exists)
 create config.json in asdm-core-assets/mcps/{mcp-server-id}/ (if not exists)
 update asdm-core-assets/mcps/mcps-registry.json
 
 make sure you follow the following rules:
 - make sure you read and analyze all files in the given path
-- copy ALL files (including source code, documentation, configuration files, etc.) from the source folder to the target MCP directory
 - determine a best mcpId and description based on comprehensive analysis from the given folder path
-- preserve the original directory structure
 - generate README.md with tree-view format showing all files in the MCP folder
-- generate INSTALL.md with installation instructions for different transport methods (stdio, sse, http)
 - generate config.json with tool definitions extracted from the source code
+- Do not create any other unnecessary files.
 
 MCP registry entry must include the following fields (same structure as specs-registry.json):
 - id: unique identifier (use folder name as id)
@@ -49,9 +46,25 @@ Example registry entry:
 
 For config.json, include:
 - name: MCP server name
+- githubUrl: GitHub repository URL of the MCP project
 - description: brief description
 - version: version number
-- transport: transport type (stdio, sse, or http)
-- package: npm package name or pip package name
-- tools: array of tool definitions with name, description, inputSchema, and annotations
+- author: MCP contributors
+- logoUrl: mcp logo url
+- tags: MCP tags - keywords for categorization and search, array type
+- category: MCP category
 - configTemplates: configuration templates for different AI assistants (claude_desktop, vscode, cursor, docker)
+- requiresApiKey: Indicates whether the MCP server requires an API key for authentication (true or false)
+- isRecommended: Indicates whether this MCP server is recommended by the platform (true or false)
+- githubStars: Number of stars on the GitHub repository - indicates popularity
+- downloadCount: Total number of downloads for the MCP server package
+- createdAt: Timestamp when the MCP server was first created/published (ISO 8601 format)
+- updatedAt: Timestamp when the MCP server was last updated (ISO 8601 format)
+- hubId: Unique identifier in the MCP Hub registry - UUID format
+- isOfficialIntegration: Indicates whether this is an official integration maintained by the MCP team (true or false)
+- isReferenceServer: Indicates whether this is a reference implementation for MCP best practices (true or false)
+- isCommunityServer: Indicates whether this is a community-contributed MCP server (true or false)
+- githubLatestCommit:SHA hash of the latest commit on the GitHub repository
+- githubForks: Number of forks on the GitHub repository - indicates community engagement
+- licenseType: Open source license type (e.g., MIT, Apache-2.0, GPL-3.0)
+
