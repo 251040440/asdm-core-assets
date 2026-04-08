@@ -6,7 +6,7 @@
   "updatedBy": "ASDM Platform",
   "toolsets": [
     {
-      "id": "prototype-builder",
+      "id": "prototype-builder1",
       "guid": "f2a3b4c5-d6e7-8901-2345-678901234567",
       "name": "Prototype Builder",
       "description": "A toolset for rapidly generating verifiable prototypes based on user requirements and technology stack specifications. Supports React, Vue, HTML, and WeChat Mini Program.",
