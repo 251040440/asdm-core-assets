@@ -8,7 +8,7 @@
     {
       "id": "prototype-builder1",
       "guid": "f2a3b4c5-d6e7-8901-2345-678901234567",
-      "name": "Prototype Builder",
+      "name": "Prototype Builder2",
       "description": "A toolset for rapidly generating verifiable prototypes based on user requirements and technology stack specifications. Supports React, Vue, HTML, and WeChat Mini Program.",
       "version": "1.0.0",
       "downloadUrl": "prototype-builder.zip",
